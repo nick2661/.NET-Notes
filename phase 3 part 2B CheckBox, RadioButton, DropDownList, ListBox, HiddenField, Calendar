@@ -1,0 +1,595 @@
+# Phase 3 – ASP.NET Web Forms (Part 2B)
+
+# Selection Controls
+
+## Topics Covered
+
+1. CheckBox
+2. RadioButton
+3. DropDownList
+4. ListBox
+5. HiddenField
+6. Calendar
+
+---
+
+# Introduction
+
+Selection controls allow users to:
+
+* Select one option
+* Select multiple options
+* Choose from a list
+* Pick a date
+* Store hidden values
+
+These controls are commonly used in registration forms, employee portals, and data entry screens.
+
+---
+
+# 1. CheckBox
+
+## Definition
+
+A **CheckBox** allows the user to select or deselect an option.
+
+Unlike RadioButton, multiple CheckBoxes can be selected.
+
+---
+
+## Syntax
+
+```aspx
+<asp:CheckBox
+    ID="chkTerms"
+    runat="server"
+    Text="I Accept Terms & Conditions" />
+```
+
+---
+
+## Important Properties
+
+| Property     | Purpose                            |
+| ------------ | ---------------------------------- |
+| Text         | Text displayed beside CheckBox     |
+| Checked      | Returns True or False              |
+| AutoPostBack | Automatically posts page to server |
+
+---
+
+## Code Behind
+
+```csharp
+if (chkTerms.Checked)
+{
+    lblResult.Text = "Accepted";
+}
+else
+{
+    lblResult.Text = "Please accept terms.";
+}
+```
+
+---
+
+## Output
+
+If checked:
+
+```text
+Accepted
+```
+
+If unchecked:
+
+```text
+Please accept terms.
+```
+
+---
+
+## Company Usage
+
+* Accept Terms
+* Remember Me
+* Enable Notifications
+* User Permissions
+
+---
+
+# 2. RadioButton
+
+## Definition
+
+A **RadioButton** allows the user to select only **one option** from a group.
+
+---
+
+## Syntax
+
+```aspx
+<asp:RadioButton
+    ID="rbMale"
+    runat="server"
+    GroupName="Gender"
+    Text="Male" />
+
+<asp:RadioButton
+    ID="rbFemale"
+    runat="server"
+    GroupName="Gender"
+    Text="Female" />
+```
+
+---
+
+## Code Behind
+
+```csharp
+if (rbMale.Checked)
+{
+    lblGender.Text = "Male";
+}
+else if (rbFemale.Checked)
+{
+    lblGender.Text = "Female";
+}
+```
+
+---
+
+## Output
+
+```text
+Male
+```
+
+or
+
+```text
+Female
+```
+
+---
+
+## Company Usage
+
+* Gender
+* Payment Method
+* Active / Inactive
+* Yes / No
+
+---
+
+# CheckBox vs RadioButton
+
+| CheckBox              | RadioButton           |
+| --------------------- | --------------------- |
+| Multiple selections   | Single selection      |
+| Independent           | Group-based           |
+| Uses Checked property | Uses Checked property |
+
+---
+
+# 3. DropDownList
+
+## Definition
+
+A **DropDownList** displays a list of options where the user can select one value.
+
+---
+
+## Syntax
+
+```aspx
+<asp:DropDownList
+    ID="ddlCity"
+    runat="server">
+
+    <asp:ListItem>Pune</asp:ListItem>
+    <asp:ListItem>Mumbai</asp:ListItem>
+    <asp:ListItem>Kolhapur</asp:ListItem>
+
+</asp:DropDownList>
+```
+
+---
+
+## Reading Selected Value
+
+```csharp
+lblCity.Text = ddlCity.SelectedItem.Text;
+```
+
+or
+
+```csharp
+string city = ddlCity.SelectedValue;
+```
+
+---
+
+## Output
+
+```text
+Pune
+```
+
+---
+
+## AutoPostBack Example
+
+```aspx
+AutoPostBack="true"
+OnSelectedIndexChanged="ddlCity_SelectedIndexChanged"
+```
+
+```csharp
+protected void ddlCity_SelectedIndexChanged(object sender, EventArgs e)
+{
+    lblCity.Text = ddlCity.SelectedValue;
+}
+```
+
+---
+
+## Company Usage
+
+* Department
+* Country
+* State
+* City
+* Designation
+
+---
+
+# 4. ListBox
+
+## Definition
+
+A **ListBox** displays multiple items and can allow single or multiple selection.
+
+---
+
+## Syntax
+
+```aspx
+<asp:ListBox
+    ID="lstSkills"
+    runat="server"
+    SelectionMode="Multiple">
+
+    <asp:ListItem>C#</asp:ListItem>
+    <asp:ListItem>SQL</asp:ListItem>
+    <asp:ListItem>ASP.NET</asp:ListItem>
+
+</asp:ListBox>
+```
+
+---
+
+## Reading Selected Items
+
+```csharp
+foreach (ListItem item in lstSkills.Items)
+{
+    if (item.Selected)
+    {
+        lblSkills.Text += item.Text + " ";
+    }
+}
+```
+
+---
+
+## Output
+
+```text
+C# SQL
+```
+
+---
+
+## Company Usage
+
+* Employee Skills
+* User Roles
+* Available Modules
+* Multiple Permissions
+
+---
+
+# DropDownList vs ListBox
+
+| DropDownList     | ListBox                      |
+| ---------------- | ---------------------------- |
+| One visible item | Multiple visible items       |
+| Single selection | Single or multiple selection |
+| Saves space      | Better for multiple choices  |
+
+---
+
+# 5. HiddenField
+
+## Definition
+
+A **HiddenField** stores data on the page that is not visible to the user.
+
+---
+
+## Why Use HiddenField?
+
+Sometimes we need to store information such as:
+
+* Employee ID
+* User ID
+* Product ID
+* Record ID
+
+without displaying it.
+
+---
+
+## Syntax
+
+```aspx
+<asp:HiddenField
+    ID="hfEmployeeId"
+    runat="server"
+    Value="101" />
+```
+
+---
+
+## Reading Value
+
+```csharp
+string id = hfEmployeeId.Value;
+```
+
+---
+
+## Output
+
+```text
+101
+```
+
+(User cannot see it on the page.)
+
+---
+
+## Company Usage
+
+* Store Record IDs
+* Store User IDs
+* Store Product IDs
+* Store Temporary Values
+
+---
+
+# 6. Calendar
+
+## Definition
+
+The **Calendar** control allows users to select a date from a calendar interface.
+
+---
+
+## Syntax
+
+```aspx
+<asp:Calendar
+    ID="calDOB"
+    runat="server" />
+```
+
+---
+
+## Reading Selected Date
+
+```csharp
+lblDate.Text =
+calDOB.SelectedDate.ToShortDateString();
+```
+
+---
+
+## Output
+
+```text
+22/07/2026
+```
+
+---
+
+## SelectedDateChanged Event
+
+```aspx
+<asp:Calendar
+    ID="calDOB"
+    runat="server"
+    OnSelectionChanged="calDOB_SelectionChanged" />
+```
+
+```csharp
+protected void calDOB_SelectionChanged(object sender, EventArgs e)
+{
+    lblDate.Text =
+    calDOB.SelectedDate.ToShortDateString();
+}
+```
+
+---
+
+## Company Usage
+
+* Date of Birth
+* Joining Date
+* Leave Request
+* Booking Date
+
+---
+
+# Summary of Selection Controls
+
+| Control      | Purpose                         |
+| ------------ | ------------------------------- |
+| CheckBox     | Multiple independent selections |
+| RadioButton  | Single selection from a group   |
+| DropDownList | Select one item from a list     |
+| ListBox      | Single or multiple selections   |
+| HiddenField  | Store hidden values             |
+| Calendar     | Select dates                    |
+
+---
+
+# Interview Questions
+
+### Q1. Which property checks whether a CheckBox is selected?
+
+`Checked`
+
+---
+
+### Q2. Which property groups RadioButtons?
+
+`GroupName`
+
+---
+
+### Q3. Which property retrieves the selected item from a DropDownList?
+
+`SelectedItem`
+
+or
+
+`SelectedValue`
+
+---
+
+### Q4. Which event occurs when a DropDownList selection changes?
+
+`SelectedIndexChanged`
+
+---
+
+### Q5. Which control supports multiple selections?
+
+ListBox (when `SelectionMode="Multiple"`)
+
+---
+
+### Q6. Which property stores data in a HiddenField?
+
+`Value`
+
+---
+
+### Q7. Which event occurs when a Calendar date changes?
+
+`SelectionChanged`
+
+---
+
+### Q8. Which control should you use to store an Employee ID without displaying it?
+
+HiddenField
+
+---
+
+# Flashcards
+
+**Q:** Which property checks a CheckBox?
+**A:** `Checked`
+
+**Q:** Which property groups RadioButtons?
+**A:** `GroupName`
+
+**Q:** Which DropDownList property returns the selected value?
+**A:** `SelectedValue`
+
+**Q:** Which event is used for DropDownList changes?
+**A:** `SelectedIndexChanged`
+
+**Q:** Which control stores hidden data?
+**A:** HiddenField
+
+**Q:** Which property stores HiddenField data?
+**A:** `Value`
+
+**Q:** Which control is used to select dates?
+**A:** Calendar
+
+---
+
+# Mini Practice
+
+1. Create a CheckBox for **Accept Terms & Conditions**.
+2. Create two RadioButtons for **Male** and **Female**.
+3. Create a DropDownList with **Pune**, **Mumbai**, and **Kolhapur**.
+4. Display the selected city in a Label.
+5. Create a ListBox with **C#**, **SQL**, and **ASP.NET**, allowing multiple selections.
+6. Store Employee ID **101** in a HiddenField and display it in a Label.
+7. Create a Calendar and display the selected date.
+
+---
+
+# Quick Revision
+
+## CheckBox
+
+* Multiple independent selections.
+* Uses the `Checked` property.
+
+## RadioButton
+
+* Single selection.
+* Uses `GroupName` to create a group.
+
+## DropDownList
+
+* Single selection from a list.
+* Common properties:
+
+  * `SelectedItem`
+  * `SelectedValue`
+* Event:
+
+  * `SelectedIndexChanged`
+
+## ListBox
+
+* Displays multiple items.
+* Supports single or multiple selection.
+
+## HiddenField
+
+* Stores values not visible to the user.
+* Uses the `Value` property.
+
+## Calendar
+
+* Used to select dates.
+* Event:
+
+  * `SelectionChanged`
+* Property:
+
+  * `SelectedDate`
+
+---
+
+# Company Notes (Legacy ASP.NET Web Forms)
+
+These controls are used frequently in enterprise applications:
+
+* **CheckBox** → Accept terms, permissions, feature flags.
+* **RadioButton** → Gender, status, payment method.
+* **DropDownList** → Department, location, role, category.
+* **ListBox** → Assign roles, modules, or skills.
+* **HiddenField** → Store database record IDs during edit/update operations.
+* **Calendar** → Date of birth, leave requests, booking dates, joining dates.
+
+A common scenario is editing an employee record: the employee ID is stored in a **HiddenField**, department is selected from a **DropDownList**, status uses **RadioButtons**, permissions use **CheckBoxes**, and the joining date is chosen with a **Calendar**.
